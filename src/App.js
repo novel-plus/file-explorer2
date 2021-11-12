@@ -1,11 +1,10 @@
-import FileTree from "./file-tree/FileTree";
-import TextEditor from "./text-editor/TextEditor";
-import './style.css';
+import FileTreeContainer from "./file-tree/FileTree";
+import TextEditorContainer from "./text-editor/TextEditor";
 
 function App() {
     return <div className="app">
-        <FileTree />
-        <TextEditor />
+        <FileTreeContainer />
+        <TextEditorContainer />
     </div>
 }
 

@@ -1,0 +1,13 @@
+.app {
+    display: flex;
+    flex-direction: row;
+}
+
+.file-tree-container {
+    background-color: bisque;
+}
+
+.text-editor-container {
+    width: 100%;
+    background-color: brown;
+}
