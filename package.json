@@ -1,0 +1,28 @@
+{
+  "name": "file-explorer",
+  "version": "0.1.0",
+  "description": "electron file explorer",
+  "main": "main/main.js",
+  "scripts": {
+    "compile": "webpack --config webpack.config.js",
+    "start:react": "npx http-server main/compile",
+    "start": "electron ."
+  },
+  "author": "fifteenmania",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.16.0",
+    "@babel/preset-env": "^7.16.0",
+    "@babel/preset-react": "^7.16.0",
+    "babel-loader": "^8.2.3",
+    "css-loader": "^6.5.1",
+    "electron": "^15.3.1",
+    "html-loader": "^3.0.1",
+    "html-webpack-plugin": "^5.5.0",
+    "mini-css-extract-plugin": "^2.4.4",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "webpack": "^5.64.0",
+    "webpack-cli": "^4.9.1"
+  }
+}
