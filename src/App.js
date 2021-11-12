@@ -1,7 +1,12 @@
-import React from 'react';
+import FileTree from "./file-tree/FileTree";
+import TextEditor from "./text-editor/TextEditor";
+import './style.css';
 
 function App() {
-    return <h1>hello react</h1>
+    return <div className="app">
+        <FileTree />
+        <TextEditor />
+    </div>
 }
 
 export default App;
