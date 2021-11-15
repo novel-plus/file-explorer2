@@ -5,6 +5,7 @@
 
 .file-tree-container {
     background-color: bisque;
+    width: fit-content;
 }
 
 .text-editor-container {

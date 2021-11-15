@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function FileTreeTitle() {
     return <header className="file-tree-title">
@@ -15,14 +15,14 @@ function FileTreeMenuFileItem({data}) {
 function FileTreeMenuDirItem({data}) {
     return <li>
         {data.name}
-        <FileTreeMenu data={data.items} />
+        <FileTreeMenu data={data} />
     </li>
 }
 
 function FileTreeMenu({data}) {
     return <ul>
         {data.items.map((item) => {
-            const isFile = (item.items.length === 0);
+            const isFile = (item.items === null);
             return isFile? 
                 <FileTreeMenuFileItem data={item} /> :
                 <FileTreeMenuDirItem data={item}/>
@@ -34,25 +34,34 @@ function FileTreeContainer() {
     const initialTreeData = {
         name: null,
         path: null,
-        items: []
+        items: null
     };
     const testTreeData = {
         name: "test",
         items: [{
             name: "test-sub",
-            items: []
+            items: null
         }, {
             name: "test-sub-dir",
             items: [{
                 name: "test-sub-sub",
-                items: []
+                items: null
             }, {
                 name: "test-sub-sub2",
-                items: []
+                items: null
             }]
         }]
     }
-    const [fileTreeData, setFileTreeData] = useState(testTreeData)
+    const [fileTreeData, setFileTreeData] = useState(testTreeData);
+    useEffect(() => {
+        document.addEventListener("file:dir-opened", (event)=>{
+            const result = event.detail;
+            if (!result.canceled){
+                console.log(result.content);
+                setFileTreeData(result.content);
+            }
+        });
+    })
     return <section className="file-tree-container">
         <FileTreeTitle />
         <FileTreeMenu data={fileTreeData}/>
