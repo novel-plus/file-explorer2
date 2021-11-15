@@ -4,6 +4,8 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const TerserWebpackPlugin = require('terser-webpack-plugin')
 const webpack = require("webpack");
 
+
+// TODO: watch option 
 module.exports = {
     entry: "./src/index.js",
     output: {

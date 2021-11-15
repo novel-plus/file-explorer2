@@ -1,4 +1,5 @@
 const { contextBridge, ipcMain, ipcRenderer } = require("electron");
+const marked = require('marked');
 
 function dispatchMainEvent(eventType, payload) {
     const event = new CustomEvent(eventType, {detail: payload});
@@ -10,5 +11,9 @@ contextBridge.exposeInMainWorld("fileApi", {
 })
 
 ipcRenderer.on("file:dir-opened", (event, result) => {
-    dispatchMainEvent('file:dir-opened', result);
+    dispatchMainEvent("file:dir-opened", result);
+})
+
+ipcRenderer.on("file:file-opened", (event, result) => {
+    dispatchMainEvent("file:file-opened", result);
 })
