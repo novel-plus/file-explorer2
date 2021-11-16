@@ -10,7 +10,4 @@ function useEvent(eventType, initialState, listener) {
     return [state, setState];
 }
 
-function useIpc(channel, method, listener) {
-}
-
 export { useEvent } 

@@ -7,13 +7,19 @@ function dispatchMainEvent(eventType, payload) {
 }
 
 contextBridge.exposeInMainWorld("fileApi", {
-    openDir: () => ipcRenderer.invoke("file:open-dir")
+    openDir: () => ipcRenderer.send("file:open-dir"),
+    readFile: (fileName) => ipcRenderer.send("file:read-file", fileName)
 })
 
-ipcRenderer.on("file:dir-opened", (event, result) => {
-    dispatchMainEvent("file:dir-opened", result);
+ipcRenderer.on("file:on-open-dir", (event) => {
+    dispatchMainEvent("file:request-open-dir");
 })
 
-ipcRenderer.on("file:file-opened", (event, result) => {
-    dispatchMainEvent("file:file-opened", result);
+ipcRenderer.on("file:fin-open-dir", (event, result) => {
+    dispatchMainEvent("file:fin-open-dir", result);
 })
+
+ipcRenderer.on("file:fin-read-file", (event, result) => {
+    dispatchMainEvent("file:fin-read-file", result);
+})
+

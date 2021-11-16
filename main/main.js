@@ -3,22 +3,26 @@ const path = require("path");
 const fileModule = require("./fileModule");
 
 async function openDirectoryDialog({targetWindow, basePath=app.getPath('documents')}={}) {
-    const fileSelect = await dialog.showOpenDialog(targetWindow, {
-        title: "폴더를 선택해주세요",
-        properties: ['openDirectory'],
-        defaultPath: basePath,
-        encoding: 'utf-8'
-    });
     const result = {
-        canceled: fileSelect.canceled,
+        canceled: true,
         content: null
     };
-    if (!fileSelect.canceled) {
-        result.content = await fileModule.getDirectoryTree(fileSelect.filePaths[0]).catch((e) => {
-            result.canceled = true;
+    try {
+        const dirSelect = await dialog.showOpenDialog(targetWindow, {
+            title: "폴더를 선택해주세요",
+            properties: ['openDirectory'],
+            defaultPath: basePath,
+            encoding: 'utf-8'
         });
+        result.canceled = dirSelect.canceled;
+        if (!dirSelect.canceled) {
+            result.content = await fileModule.getDirectoryTree(dirSelect.filePaths[0]);
+        }
+    } catch (err) {
+        result.canceled = true;
+    } finally {
+        return result;
     }
-    return result;
 }
 
 function createMenu() {
@@ -30,9 +34,10 @@ function createMenu() {
             rule: "openFolder",
             label: "폴더 열기",
             accelerator: isMac? "Cmd+O" : "Ctrl+O",
-            click: () => {
+            click: async () => {
                 const focusedWindow = BrowserWindow.getFocusedWindow();
-                openDirectoryDialog({targetWindow: focusedWindow}).then((result) => focusedWindow.webContents.send("file:dir-opened", result))
+                const result = await openDirectoryDialog({targetWindow: focusedWindow});
+                focusedWindow.webContents.send("file:fin-open-dir", result)
             }
         }, {
             rule: "newFile",
@@ -57,7 +62,7 @@ function createMenu() {
             accelerator: isMac? "Cmd+Y" : "Ctrl+Y",
             click: () => {
                 const focusedWindow = BrowserWindow.getFocusedWindow();
-                focusedWindow.webContents.redo();    
+                focusedWindow.webContents.redo();
             }
         }]
     }))
@@ -69,7 +74,7 @@ function createWindow({isDebug = false}) {
         webPreferences: {
             nodeIntegration: false,
             defaultEncoding: "utf-8",
-            preload: path.resolve(__dirname, "preload.js")
+            preload: path.resolve(__dirname, "preload.js"),
         },
     });
     if (isDebug) mainWindow.webContents.openDevTools();
@@ -82,9 +87,15 @@ function initializeWindow() {
     Menu.setApplicationMenu(menu);
     const mainWindow = createWindow({isDebug: true});
 
-    ipcMain.handle("file:open-dir", (message) => {
+    ipcMain.on("file:open-dir", async (event, dirName) => {
         const focusedWindow = BrowserWindow.getFocusedWindow();
-        return openDirectoryDialog({targetWindow: focusedWindow});
+        const result = await openDirectoryDialog({targetWindow: focusedWindow});
+        event.senderFrame.send("file:fin-open-dir", result);
+    })
+
+    ipcMain.on("file:read-file", async (event, fileName) => {
+        const content = await fileModule.getFileContent(fileName);
+        event.senderFrame.send("file:fin-read-file", content);
     })
 }
 

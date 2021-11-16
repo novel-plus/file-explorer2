@@ -1,5 +1,5 @@
 const path = require('path');
-const { opendir } = require('fs/promises');
+const { opendir, readFile } = require('fs/promises');
 
 async function getDirectoryTree(dirName, {encoding="utf-8"}={}) {
     const result = {
@@ -24,8 +24,15 @@ async function getDirectoryTree(dirName, {encoding="utf-8"}={}) {
     return result;
 }
 
-
+async function getFileContent(fileName, {encoding="utf-8"}={}) {
+    const result = {
+        content: ""
+    };
+    result.content = await readFile(fileName, {encoding: encoding});
+    return result;
+}
 
 module.exports = {
-    getDirectoryTree: getDirectoryTree
+    getDirectoryTree: getDirectoryTree,
+    getFileContent: getFileContent,
 }
