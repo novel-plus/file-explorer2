@@ -8,6 +8,7 @@ function Resizer({sidebarRef, setWidth}) {
         const newSize = event.clientX - sidebarRef.current.getBoundingClientRect().left;
         setWidth(newSize);
     }
+    
     useEffect(() => {
         const resizeHandler = () => {
             document.addEventListener("mousemove", resize, false);
@@ -15,7 +16,7 @@ function Resizer({sidebarRef, setWidth}) {
                 document.removeEventListener("mousemove", resize, false);
                 document.removeEventListener("mouseup", handleMouseup);
             }
-            document.addEventListener("mouseup", handleMouseup, false)
+            document.addEventListener("mouseup", handleMouseup, false);
         };
         resizerRef.current.addEventListener("mousedown", resizeHandler);
         return () => resizerRef.current.removeEventListener("mousedown", resizeHandler);

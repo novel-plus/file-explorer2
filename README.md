@@ -3,6 +3,6 @@
 
 ## 배포
 ### v0.1.0(unstable)
-- [linux/x64(zip)](https://github.com/novel-plus/file-explorer2/releases/download/v0.1.0/file-explorer-0.1.0.zip)
-- [win32/x64(installer)](https://github.com/novel-plus/file-explorer2/releases/download/v0.1.0/fileExplorer.Setup.0.1.0.exe)
-- [win32/x64(zip)](https://github.com/novel-plus/file-explorer2/releases/download/v0.1.0/fileExplorer-0.1.0-win.zip)
+- [linux/x64(bin)](https://github.com/novel-plus/file-explorer2/releases/download/v0.1.0/file-explorer-0.1.0.zip)
+- [win32/x64(exe)](https://github.com/novel-plus/file-explorer2/releases/download/v0.1.0/fileExplorer.Setup.0.1.0.exe)
+- [win32/x64(bin)](https://github.com/novel-plus/file-explorer2/releases/download/v0.1.0/fileExplorer-0.1.0-win.zip)

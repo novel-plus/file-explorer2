@@ -16,7 +16,6 @@
 }
 
 .file-tree-wrapper {
-    background-color: bisque;
     display: flex;
     flex-grow: 0;
     flex-shrink: 0;
