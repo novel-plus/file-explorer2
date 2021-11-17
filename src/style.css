@@ -3,12 +3,7 @@
     flex-direction: row;
 }
 
-.file-tree-container {
-    background-color: bisque;
-    max-width: 18em;
-}
-
-.text-editor-container {
-    width: 100%;
-    background-color: brown;
+section {
+    margin: 0;
+    padding: 0;
 }
