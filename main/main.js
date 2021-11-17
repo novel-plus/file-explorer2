@@ -82,10 +82,10 @@ function createWindow({isDebug = false}) {
     return mainWindow;
 }
 
-function initializeWindow() {
+function initializeWindow({isDebug=false} ={}) {
     const menu = createMenu();
     Menu.setApplicationMenu(menu);
-    const mainWindow = createWindow({isDebug: true});
+    const mainWindow = createWindow({isDebug: isDebug});
 
     ipcMain.on("file:open-dir", async (event, dirName) => {
         const focusedWindow = BrowserWindow.getFocusedWindow();
@@ -100,7 +100,7 @@ function initializeWindow() {
 }
 
 app.whenReady().then(() => {
-    initializeWindow();
+    initializeWindow({isDebug: false});
 
     app.on("activate", () => {
         if (BrowserWindow.getAllWindows().length === 0) {

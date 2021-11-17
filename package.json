@@ -5,6 +5,7 @@
   "main": "main/main.js",
   "scripts": {
     "compile": "webpack --config webpack.config.js",
+    "build:linux": "electron-builder --linux --x64",
     "start:react": "npx http-server main/compile",
     "start": "electron ."
   },
@@ -17,13 +18,42 @@
     "babel-loader": "^8.2.3",
     "css-loader": "^6.5.1",
     "electron": "^15.3.1",
+    "electron-builder": "^22.13.1",
     "html-loader": "^3.0.1",
     "html-webpack-plugin": "^5.5.0",
-    "marked": "^4.0.3",
     "mini-css-extract-plugin": "^2.4.4",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "webpack": "^5.64.0",
     "webpack-cli": "^4.9.1"
+  },
+  "build": {
+    "productName": "fileExplorer",
+    "appId": "org.novelplus.fileExplorer",
+    "asar": true,
+    "files": [
+      "!src",
+      "!webpack.config.js",
+      "!README.md"
+    ],
+    "protocols": {
+      "name": "fileExplorer",
+      "schemes": [
+        "fileExplorer"
+      ]
+    },
+    "linux": {
+      "target": [
+        "zip"
+      ]
+    },
+    "directories": {
+      "buildResources": "./resources/installer/",
+      "output": "./dist/",
+      "app": "."
+    }
+  },
+  "dependencies": {
+    "marked": "^4.0.3"
   }
 }

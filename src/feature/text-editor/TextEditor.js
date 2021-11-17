@@ -1,6 +1,7 @@
 import { marked } from "marked";
 import { useState } from "react";
-import { useEvent } from "../utils/hooks";
+import { useEvent } from "../../utils/hooks";
+import "./style.css"
 
 function TextEditorTitle() {
     return <h1>TextEditor</h1>
@@ -25,7 +26,7 @@ function TextEditorMainContainer({content, setContent}) {
     </div>
 }
 
-function TextEditorContainer() {
+function TextEditorWrapper() {
     const [content, setContent] = useEvent("file:fin-read-file", "", (result) => {
         setContent(result.content);
     });
@@ -36,4 +37,4 @@ function TextEditorContainer() {
     </section>
 }
 
-export default TextEditorContainer;
+export default TextEditorWrapper;
